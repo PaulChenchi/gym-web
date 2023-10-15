@@ -5,6 +5,34 @@
 <head>
     <meta charest="utf-8">
     <title>BMI 計算機</title>
+    <style>
+        body {
+            text-align: center;
+            background-color: antiquewhite;
+        }
+
+        form {
+            width: 300px;
+            height: 200px;
+            margin: 0 auto;
+            border-radius: 15px;
+            background-color: crimson;
+            padding: 24px;
+        }
+
+        input {
+            text-align: center;
+        }
+
+        #calc {
+            width: 100px;
+            background-color: aqua;
+        }
+
+        .bmi-result {
+            background-color: rgb(246, 255, 0);
+        }
+    </style>
 
 </head>
 
@@ -17,9 +45,7 @@
         <label for="password">密碼:</label>
         <input type="password" id="password" name="password" placeholder="請輸入密碼">
         <br>
-        <label for="birthday">生日:</label>
-        <input type="date" id="birthday" name="birthday" value="Paul">
-        <br>
+
         <label for="userheight">身高:</label>
         <input type="number" id="userheight" name="userheight" value="170" step="0.5" required>
         <br>
@@ -28,14 +54,20 @@
         <br>
         <label for="useremail">mail:</label>
         <input type="email" id="useremail" name="useremail" placeholder="請輸入email">
+        <br>
+        <label for="birthday">生日:</label>
+        <input type="date" id="birthday" name="birthday" value="Paul">
         <p>
-            <input type="button" id="calc" value="計算" onclick="calcBMI()"></input><a href="./index.html">回首頁</a>
+            <input type="button" id="calc" value="計算" onclick="calcBMI()"></input>
         </p>
-        <h2 class="bmi-result"></h2>
+
 
 
 
     </form>
+    <a href="./index.html">回首頁</a>
+    <h1 class="bmi-result"></h1>
+    <h3 class="bmi-comment"></h3>
     <script>
 
         function calcBMI() {
@@ -50,11 +82,15 @@
                     break;
                 }
             }
-            bmiResult.innerHTML = `BNI:${bmi}<br>${comment}`
+            bmiResult.innerHTML = `BNI:${bmi}`
+            bmiComment.innerHTML = `${comment}`
         }
 
         function getBMI(height, weight) {
 
+            if (height == '' || weight == '') {
+                return "輸入不得為空!";
+            }
             let bmi = weight / ((height / 100) ** 2);
             console.log(bmi, weight, height);
 
@@ -72,7 +108,7 @@
             [18.5, "「體重過輕」，需要多運動，均衡飲食，以增加體能，維持健康！"],
             [24, "恭喜！「健康體重」，要繼續保持！"],
             [27, "「體重過重」了，要小心囉，趕快力行「健康體重管理」！"],
-            [1000, "啊～「肥胖」，需要立刻力行「健康體重管理囉"],
+            [1000, "啊～「肥胖」，需要立刻力行「健康體重管理囉」"],
         ]
 
         // 取得元素
@@ -80,6 +116,8 @@
         const weightEl = document.querySelector("#userweight");
         const heightEl = document.querySelector("#userheight");
         const bmiResult = document.querySelector(".bmi-result");
+        const bmiComment = document.querySelector(".bmi-comment");
+
         console.log(calcBtn, heightEl, weightEl);
 
         // 監聽按鈕
