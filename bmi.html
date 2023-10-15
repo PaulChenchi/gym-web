@@ -27,14 +27,76 @@
         <input type="number" id="userweight" name="userweight" value="90" step="0.5" required>
         <br>
         <label for="useremail">mail:</label>
-        <input type="email" id="useremail" name="useremail" placeholder="請輸入email" required>
+        <input type="email" id="useremail" name="useremail" placeholder="請輸入email">
         <p>
-            <button>計算</button><a href="./index.html">回首頁</a>
+            <input type="button" id="calc" value="計算" onclick="calcBMI()"></input><a href="./index.html">回首頁</a>
         </p>
+        <h2 class="bmi-result"></h2>
 
 
 
     </form>
+    <script>
+
+        function calcBMI() {
+            let bmi = getBMI(heightEl.value, weightEl.value);
+            console.log(bmi);
+            bmiResult.innerText = `BMI:${bmi}`;
+            //輸出BMI評語
+            comment = "";
+            for (let i = 0; i < BMI_COMMET.length; i++) {
+                if (bmi < BMI_COMMET[i][0]) {
+                    comment = BMI_COMMET[i][1];
+                    break;
+                }
+            }
+            bmiResult.innerHTML = `BNI:${bmi}<br>${comment}`
+        }
+
+        function getBMI(height, weight) {
+
+            let bmi = weight / ((height / 100) ** 2);
+            console.log(bmi, weight, height);
+
+            if (isNaN(bmi)) {
+                return "輸入錯誤!";
+            }
+            return bmi.toFixed(2);
+
+
+            console.log(bmi);
+            document.write(`BMI${bmi.toFixed(2)}`);
+
+        }
+        const BMI_COMMET = [
+            [18.5, "「體重過輕」，需要多運動，均衡飲食，以增加體能，維持健康！"],
+            [24, "恭喜！「健康體重」，要繼續保持！"],
+            [27, "「體重過重」了，要小心囉，趕快力行「健康體重管理」！"],
+            [1000, "啊～「肥胖」，需要立刻力行「健康體重管理囉"],
+        ]
+
+        // 取得元素
+        const calcBtn = document.querySelector("#calc");
+        const weightEl = document.querySelector("#userweight");
+        const heightEl = document.querySelector("#userheight");
+        const bmiResult = document.querySelector(".bmi-result");
+        console.log(calcBtn, heightEl, weightEl);
+
+        // 監聽按鈕
+        // calcBtn.addEventListener("click", () => {
+        // 計算BMI
+        // let bmi = getBMI(heightEl.value, weightEl.value);
+        // console.log(bmi);
+        // bmiResult.innerText = `BMI:${bmi}`
+        //     //document.write(`BMI:${bmi}`)
+        // });
+
+        // document.querySelector("h1").innerText = "超級計算機"
+        // let height = document.querySelector("#userheight").value;
+        // let weight = document.querySelector("#userweight").value;
+        // let bmi = weight / ((height / 100) ** 2);
+
+    </script>
 </body>
 
 </html>
